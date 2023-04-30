@@ -3,11 +3,15 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { ItemsComponent } from './items/items.component';
+import { InvoiceListComponent } from './invoice-list/invoice-list.component';
+import { ActiveInvoiceComponent } from './active-invoice/active-invoice.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ItemsComponent
+    ItemsComponent,
+    InvoiceListComponent,
+    ActiveInvoiceComponent
   ],
   imports: [
     BrowserModule
