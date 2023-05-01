@@ -1,1 +1,40 @@
-<p>items works!</p>
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+        This is some text within a card body.
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="inputGroup-sizing-default">Article name</span>
+
+            <input type="text" class="form-control" aria-label="Sizing example input"
+                aria-describedby="inputGroup-sizing-default">
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="inputGroup-sizing-default">Price</span>
+
+            <input type="text" class="form-control" aria-label="Sizing example input"
+                aria-describedby="inputGroup-sizing-default">
+        </div>
+    </div>
+</div>
+
+<div class="content">
+    <div class="header">
+        <h2>List items</h2>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Item_name</th>
+                    <th>Sale_price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of items">
+                    <td> {{item.id}} </td>
+                    <td> {{item.item_name}} </td>
+                    <td> {{item.sale_price}} </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
