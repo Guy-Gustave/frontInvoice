@@ -3,11 +3,12 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ItemsComponent } from './items/items.component';
 import { InvoiceListComponent } from './invoice-list/invoice-list.component';
 import { ActiveInvoiceComponent } from './active-invoice/active-invoice.component';
+import { InvoicesService } from './services/invoices.service';
 // import { ToastrModule } from 'ngx-toastr';
 // import { ReactiveFormsModule } from '@angular/forms';
 
@@ -23,10 +24,11 @@ import { ActiveInvoiceComponent } from './active-invoice/active-invoice.componen
     BrowserModule,
     HttpClientModule,
     ReactiveFormsModule,
+    FormsModule
     
     // ToastrModule.forRoot()
   ],
-  providers: [],
+  providers: [InvoicesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

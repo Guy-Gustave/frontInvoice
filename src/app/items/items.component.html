@@ -1,18 +1,21 @@
-<div class="card" style="width: 18rem;">
+<div class="card" style="width: 28rem;">
     <div class="card-body">
         This is some text within a card body.
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="inputGroup-sizing-default">Article name</span>
+        <form [formGroup]= "itemForm"(ngSubmit)="onSubmitItems()">
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default">item name</span>
 
-            <input type="text" class="form-control" aria-label="Sizing example input"
-                aria-describedby="inputGroup-sizing-default">
-        </div>
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="inputGroup-sizing-default">Price</span>
+                <input type="text" class="form-control" aria-label="Sizing example input"
+                    aria-describedby="inputGroup-sizing-default" formControlName=" item_name" >
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default">Price</span>
 
-            <input type="text" class="form-control" aria-label="Sizing example input"
-                aria-describedby="inputGroup-sizing-default">
-        </div>
+                <input type="text" class="form-control" aria-label="Sizing example input"
+                    aria-describedby="inputGroup-sizing-default" formControlName ="sale_price">
+            </div>
+            <button class="btn btn-primary">save</button>
+        </form>
     </div>
 </div>
 
@@ -25,6 +28,7 @@
                     <th>ID</th>
                     <th>Item_name</th>
                     <th>Sale_price</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -32,9 +36,55 @@
                     <td> {{item.id}} </td>
                     <td> {{item.item_name}} </td>
                     <td> {{item.sale_price}} </td>
+                    <td><button type="button" class="btn btn-secondary">Buy</button></td>
                 </tr>
             </tbody>
         </table>
 
     </div>
+
+    <div class="header">
+        <h2>List invoices</h2>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>number</th>
+                    <th>customer name</th>
+                    <th>total amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let invoice of invoices.data">
+                    <td> {{invoice.id}} </td>
+                    <td> {{invoice.number}} </td>
+                    <td> {{invoice.customer_name}} </td>
+                    <td> {{invoice.total_amount}} </td>
+                    <td><button type="button" class="btn btn-secondary">Buy</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>quantity</th>
+                <th>Item name</th>
+                <th>unit_price</th>
+                <th>total amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let invoice of invoices_items.data">
+                <td> {{invoice.id}} </td>
+                <td> {{invoice.quantity}} </td>
+                <td> {{invoice.item_id}} </td>
+                <td> {{invoice.unit_price}} </td>
+                <td> {{invoice.total_price}} </td>
+                <td><button type="button" class="btn btn-secondary">Buy</button></td>
+            </tr>
+        </tbody>
+    </table>
 </div>
