@@ -43,48 +43,5 @@
 
     </div>
 
-    <div class="header">
-        <h2>List invoices</h2>
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>number</th>
-                    <th>customer name</th>
-                    <th>total amount</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let invoice of invoices.data">
-                    <td> {{invoice.id}} </td>
-                    <td> {{invoice.number}} </td>
-                    <td> {{invoice.customer_name}} </td>
-                    <td> {{invoice.total_amount}} </td>
-                    <td><button type="button" class="btn btn-secondary">Buy</button></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>quantity</th>
-                <th>Item name</th>
-                <th>unit_price</th>
-                <th>total amount</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let invoice of invoices_items.data">
-                <td> {{invoice.id}} </td>
-                <td> {{invoice.quantity}} </td>
-                <td> {{invoice.item_id}} </td>
-                <td> {{invoice.unit_price}} </td>
-                <td> {{invoice.total_price}} </td>
-                <td><button type="button" class="btn btn-secondary">Buy</button></td>
-            </tr>
-        </tbody>
-    </table>
+    
 </div>

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, catchError, retry, throwError } from 'rxjs';
 import { Item } from '../shared/item';
+import { Invoice } from '../shared/invoice';
 
 @Injectable({
   providedIn: 'root'
@@ -39,6 +40,18 @@ export class InvoicesService {
 
   getInvoicesList() {
     return this._http.get(`${this.baseUrl}invoices`);
+  }
+
+  getInvoicesDetails() {
+    return this._http.get(`${this.baseUrl}invoices/3`);
+  }
+
+  editInvoice(id: number, invoice: any) {
+    return this._http.get(`${this.baseUrl}invoices/: id, invoice`);
+  }
+
+  addInvoices(data:Invoice): Observable<any> {
+    return this._http.post(`${this.baseUrl}invoices`, data);
   }
 
   getInvoicesItemsList() {

@@ -1,1 +1,21 @@
-<p>active-invoice works!</p>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Invoice</th>
+            <th>quantity</th>
+            <th>Item name</th>
+            <th>unit_price</th>
+            <th>total amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of invoices">
+            <td>{{item.number }} </td>
+            <td> {{item.quantity}} </td>
+            <td> {{item.item_name}} </td>
+            <td> {{item.unit_price}} </td>
+            <td> {{item.total_price}} </td>
+            <td><button type="button" class="btn btn-secondary" (click)="editInvoice(item)" >edit</button></td>
+        </tr>
+    </tbody>
+</table>

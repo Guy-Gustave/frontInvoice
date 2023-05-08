@@ -20,7 +20,7 @@ export class ItemsComponent implements OnInit {
     public InvoicesService: InvoicesService
   ) {
     this.itemForm = this._fb.group({
-      item_name: "Skol",
+      item_name: "",
       sale_price: 0 
     });
   } 

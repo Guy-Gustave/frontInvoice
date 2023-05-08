@@ -7,10 +7,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ItemsComponent } from './items/items.component';
 import { InvoiceListComponent } from './invoice-list/invoice-list.component';
-import { ActiveInvoiceComponent } from './active-invoice/active-invoice.component';
+// import { ActiveInvoiceComponent } from './active-invoice/active-invoice.component';
 import { InvoicesService } from './services/invoices.service';
+import { ActiveInvoiceComponent } from './active-invoice/active-invoice.component';
 // import { ToastrModule } from 'ngx-toastr';
 // import { ReactiveFormsModule } from '@angular/forms';
+// import {  NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -19,12 +21,14 @@ import { InvoicesService } from './services/invoices.service';
     ItemsComponent,
     InvoiceListComponent,
     ActiveInvoiceComponent
+    
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    
     
     // ToastrModule.forRoot()
   ],
