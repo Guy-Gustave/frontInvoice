@@ -1,50 +1,119 @@
-<div class="header">
-    <div class="card" style="width: 28rem;">
-        <div class="card-body">
-            This is some text within a card body.
-            <form [formGroup]= "invoiceForm"(ngSubmit)="onSubmitInvoices()">
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="inputGroup-sizing-default">customer name</span>
-    
-                    <input type="text" class="form-control" aria-label="Sizing example input"
-                        aria-describedby="inputGroup-sizing-default" formControlName=" customer_name" >
-                </div>
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="inputGroup-sizing-default">Price</span>
-    
-                    <input type="text" class="form-control" aria-label="Sizing example input"
-                        aria-describedby="inputGroup-sizing-default" formControlName ="total_amount">
-                </div>
-                <button class="btn btn-primary">save</button>
-            </form>
-        </div>
-    </div>
-    
-    <h2>List invoices</h2>
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>number</th>
-                <th>customer name</th>
-                <th>total amount</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let invoice of invoices">
-                <td> {{invoice.id}} </td>
-                <td> {{invoice.number}} </td>
-                <td> in</td>
-                <td> {{invoice.total_amount}} </td>
-                <td><button class="btn btn-outline-primary me-2"(click)="editInvoice(invoice) ">
-                        check
-                    </button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+<!-- <div class="header">
+    <div mat-dialog-title>Add new invoice</div>
+<h2>Invoice form</h2> -->
+<form [formGroup]="invoiceForm" (ngSubmit)="onSubmitInvoices()">
+  <div mat-dialog-content class="content">
+    <!-- <div class="row"> -->
+    <mat-form-field appearance="outline">
+      <mat-label>Customer </mat-label>
+      <input
+        matInput
+        type="text"
+        placeholder="name"
+        formControlName="customer_name"
+      />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Select product</mat-label>
+      <mat-select formControlName="item_name">
+        <mat-option *ngFor="let item of items" [value]="item.id">{{
+          item.item_name
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>quantity</mat-label>
+      <input
+        matInput
+        type="number"
+        placeholder="ex: 3"
+        formControlName="quantity"
+      />
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      color="secondary"
+      type="button"
+      (click)="onItemSelect()"
+    >
+      add
+    </button>
+  </div>
+
+  <div mat-dialog-actions>
+    <button mat-raised-button color="primary" type="submit">Save</button>
+  </div>
+</form>
+
+<h2>List invoices</h2>
+<form action="">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>number</th>
+        <th>customer name</th>
+        <th>total amount</th>
+      </tr>
+    </thead>
+    <!-- class="btn btn-outline-primary me-2" -->
+    <tbody>
+      <tr *ngFor="let invoice of invoices">
+        <td>{{ invoice.id }}</td>
+        <td>{{ invoice.number }}</td>
+        <td>{{ invoice.customer_name }}</td>
+        <td>{{ invoice.total_amount }}</td>
+        <td>
+          <button
+            mat-raized-button
+            color="primary"
+            (click)="openActiveInvoice(invoice.id)"
+          >
+            check
+          </button>
+          <button
+            mat-raized-button
+            color="red"
+            (click)="ondeleteInvoices(invoice)"
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</form>
 
 <div class="modal" id="modal">
-    <h1>hey check well</h1>
+  <h1>hey check well</h1>
 </div>
+
+<h1>invoice details</h1>
+<form [formGroup]="invoiceForm" (ngSubmit)="onSubmitInvoices()">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>N°</th>
+        <th>Invoice</th>
+        <th>Item name</th>
+        <th>quantity</th>
+        <th>unit_price</th>
+        <th>total amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of details">
+        <td><input type="text" value="{{ item.id }}" /></td>
+        <td><input type="text" value="{{ item.number }}" /></td>
+        <td><input type="text" value="{{ item.item_name }}" /></td>
+        <td><input type="text" value="{{ item.quantity }}" /></td>
+        <td>{{ item.unit_price * 1 }} * {{ item.quantity * 1 }}</td>
+        <td>{{ item.total_price }}</td>
+        <td> <button type="button"  (click)="onItemchanged()" >edit</button> </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button type="button" class="btn btn-secondary">update</button>
+</form>

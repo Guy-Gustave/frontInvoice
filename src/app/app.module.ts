@@ -10,6 +10,16 @@ import { InvoiceListComponent } from './invoice-list/invoice-list.component';
 // import { ActiveInvoiceComponent } from './active-invoice/active-invoice.component';
 import { InvoicesService } from './services/invoices.service';
 import { ActiveInvoiceComponent } from './active-invoice/active-invoice.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { FormControl, Validators, FormBuilder, FormGroup, NgForm } from '@angular/forms';
+import {MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+import {MatTableModule} from '@angular/material/table';
+
+
 // import { ToastrModule } from 'ngx-toastr';
 // import { ReactiveFormsModule } from '@angular/forms';
 // import {  NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -28,6 +38,15 @@ import { ActiveInvoiceComponent } from './active-invoice/active-invoice.componen
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
+    BrowserAnimationsModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    MatSelectModule,
+    MatInputModule,
+    MatButtonModule,
+    MatTableModule,
+    
     
     
     // ToastrModule.forRoot()

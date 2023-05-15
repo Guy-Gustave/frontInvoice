@@ -42,16 +42,20 @@ export class InvoicesService {
     return this._http.get(`${this.baseUrl}invoices`);
   }
 
-  getInvoicesDetails() {
-    return this._http.get(`${this.baseUrl}invoices/3`);
+  getInvoicesDetails(id:number) {
+    return this._http.get(`${this.baseUrl}invoices/${id =7}`);
   }
 
-  editInvoice(id: number, invoice: any) {
+  eupdateInvoice(id: number, invoice: any) {
     return this._http.get(`${this.baseUrl}invoices/: id, invoice`);
   }
 
   addInvoices(data:Invoice): Observable<any> {
     return this._http.post(`${this.baseUrl}invoices`, data);
+  }
+
+  deleteInvoice(id: number): Observable<any> {
+    return this._http.delete(`${this.baseUrl}invoices/${id}`);
   }
 
   getInvoicesItemsList() {
