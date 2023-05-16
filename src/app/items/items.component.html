@@ -19,29 +19,20 @@
     </div>
 </div>
 
-<div class="content">
-    <div class="header">
-        <h2>List items</h2>
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Item_name</th>
-                    <th>Sale_price</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of items">
-                    <td> {{item.id}} </td>
-                    <td> {{item.item_name}} </td>
-                    <td> {{item.sale_price}} </td>
-                    <td><button type="button" class="btn btn-secondary">Buy</button></td>
-                </tr>
-            </tbody>
-        </table>
 
-    </div>
+<div class="row">
+    <h1>list of items</h1>
 
-    
+      <mat-card class="example-card" *ngFor="let item of items">
+        <mat-card-header>
+          <mat-card-title>{{item.item_name}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="cont">
+          <p>{{item.sale_price}}</p>
+          <button mat-raised-button color="primary" (click)="onPurchase(item)">Purchase</button>
+        </mat-card-content>
+
+      </mat-card>
 </div>
+
+

@@ -1,0 +1,11 @@
+.items {
+    display: flex;
+}
+
+.item {
+    max-width: 50%;
+}
+
+.invoice {
+    max-width: 50%;
+}

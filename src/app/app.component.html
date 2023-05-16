@@ -3,8 +3,12 @@
     <h1>the invoice app</h1>
   </header>
   <div class="items">
-    <!-- <app-items></app-items> -->
-    <app-invoice-list></app-invoice-list>
+    <div class="item">
+      <app-items [items]="items" (purchaseItem)="onPurchaseItem($event)"></app-items>
+    </div>
+    <div class="invoice">
+      <app-invoice-list *ngIf="showInvoice" [item]="selectedItem" (close)="onCloseInvoice()"></app-invoice-list>
+    </div>
     <!-- <app-active-invoice></app-active-invoice> -->
     <!-- <app-items></app-items> -->
   </div>

@@ -12,24 +12,25 @@ import { DialogRef } from '@angular/cdk/dialog';
   styleUrls: ['./active-invoice.component.css'],
 })
 export class ActiveInvoiceComponent {
-  detailsForm: FormGroup
+  invoiceForm: FormGroup
+
+  items: any
+  invoices: any;
+  details: any
+
+  selectedItems: any[] = [];
 
   displayedColumns: string [] = ['ID', 'item_name', 'quantity', 'unit_price', 'total_price'];
   dataSource!: MatTableDataSource<any>
 
-  items: any;
-  invoices: any;
   invoiceDetails: any;
 
   constructor(
     private _fb: FormBuilder,
     private _invoicesService: InvoicesService,
-    // public _dialogRef: MatDialogRef<ActiveInvoiceComponent>,
-    // private _dialogRef: DialogRef<ActiveInvoiceComponent>
-    // @Inject(MAT_DIALOG_DATA) public data: any
     
   ) {
-    this.detailsForm = this._fb.group({
+    this.invoiceForm = this._fb.group({
         number: "",
         item_name: "",
         quantity: "",
@@ -47,6 +48,34 @@ export class ActiveInvoiceComponent {
     //   },
     // });
     // this.invoiceDetails = this.data
+  }
+
+  onItemSelect() {
+    const item = this.invoiceForm.value.item_name;
+    // const d = this.items.find((item_id)=> item_name === item)
+    const quantity = this.invoiceForm.value.quantity;
+    const selectedItem = {
+      item_id: item,
+      quantity: quantity
+    };
+    console.log("===<>", selectedItem);
+    this.selectedItems.push(selectedItem);
+  }
+
+  onSubmitInvoices() {
+    if (this.invoiceForm.valid) {
+      console.log('==>', this.invoiceForm.value);
+      const customerName = this.invoiceForm.value.customer_name;
+
+      const dataI = {
+        customer_name: customerName,
+        items: this.selectedItems
+      }
+      console.log("data to submit",dataI);
+      this._invoicesService.addInvoices(dataI).subscribe((res) => {
+        console.log('Item added!', res);
+      })
+    }
   }
 
   // onClose() {

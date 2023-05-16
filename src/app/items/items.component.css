@@ -1,0 +1,19 @@
+.example-card {
+  max-width: 200px;
+  border: 1px solid black;
+  margin: 1rem;
+}
+
+.cont {
+  color: brown;
+  /* padding-left: 5rem; */
+  display: flex;
+  justify-content: space-between;
+}
+
+.row {
+  display: flex;
+  /* flex-wrap: wrap; */
+  flex-wrap: wrap-reverse;
+}
+

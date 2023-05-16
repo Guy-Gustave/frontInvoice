@@ -1,7 +1,9 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+// import { Component, NgZone } from '@angular/core';
 import { InvoicesService } from '../services/invoices.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+
 import { Item } from '../shared/item';
 
 @Component({
@@ -10,8 +12,11 @@ import { Item } from '../shared/item';
   styleUrls: ['./items.component.css']
 })
 export class ItemsComponent implements OnInit {
+  @Input()
+  items: any[] = [];
+  @Output() purchaseItem = new EventEmitter<any>();
   itemForm: FormGroup
-  items: any;
+  // items: any;
   invoices: any;
   invoices_items:any;
   constructor(
@@ -56,6 +61,11 @@ export class ItemsComponent implements OnInit {
         console.log('==>', this.itemForm.value);
       })
     }
+  }
+
+  onPurchase(item: any) {
+    this.purchaseItem.emit(item);
+    console.log("===>item",item);
   }
 }
 
