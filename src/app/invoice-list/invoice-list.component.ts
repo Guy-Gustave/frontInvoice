@@ -13,12 +13,17 @@ import { Item } from '../shared/item';
   styleUrls: ['./invoice-list.component.css'],
 })
 export class InvoiceListComponent {
+  [x: string]: any;
   @Input() item: any;
   @Output() close = new EventEmitter<void>();
-  customer_name!: number;
+  @Output() editInvoice = new EventEmitter<any>();
+  customer_name!: string;
   quantity!: number;
+  // details: any;
+  el = { item_name: 'Item 1', sale_price: 10 };
+  editMode = false;
+  editIndex!: number;
   invoiceForm: FormGroup;
-  // updateForm: FormGroup;
 
   // items: any;
   invoices: any;
@@ -27,6 +32,8 @@ export class InvoiceListComponent {
   selectedItems: any[] = [];
 
   updatedItems: any[] = [];
+  item_name: any;
+  sale_price: any;
 
   constructor(
     public _fb: FormBuilder,
@@ -43,6 +50,14 @@ export class InvoiceListComponent {
 
   ngOnInit(): void {
     this.onGetInvoices();
+    if(this.details) {
+      console.log("!!!!!!!!", this.details);
+      this.item_name = this.details.item_name;
+      this.sale_price = this.details.sale_price;
+      this.quantity = this.details.quantity;
+      this['total_amount'] = this.details.total_amount;
+      this.customer_name = this.details.customer_name;
+    }
 
     // this._invoicesService.getItemsList().subscribe({
     //   next: (res: any) => {
@@ -66,12 +81,26 @@ export class InvoiceListComponent {
     const id = this.item.id;
     // const d = this.items.find((item_id)=> item_name === item)
     const quantity = this.invoiceForm.value.quantity;
+    const customerName = this.invoiceForm.value.customer_name;
     const selectedItem = {
       item_id: id,
       quantity: quantity,
     };
+    const dataI = {
+      customer_name: customerName,
+      items: this.selectedItems
+    }
+    if (this.editMode) {
+      this.invoices[this.editIndex] = dataI;
+      this.editMode = false;
+      // this.editIndex = null;
+    } else {
+      // this.invoices.push(dataI);
+      this.selectedItems.push(selectedItem);
+    }
     console.log('===<>', selectedItem);
-    this.selectedItems.push(selectedItem);
+    // this.invoiceForm.reset();
+  
   }
 
   onItemchanged() {
@@ -89,21 +118,21 @@ export class InvoiceListComponent {
   onSubmit() {
     // Submit data to backend and create invoice
     // ...
-    if (this.invoiceForm.valid) {
-      console.log('==>', this.invoiceForm.value);
-      const customerName = this.invoiceForm.value.customer_name;
-      
-      const dataI = {
-        customer_name: customerName,
-        items: this.selectedItems
-      }
-      console.log("data to submit",dataI);
+
+    
+    const customerName = this.invoiceForm.value.customer_name;
+    console.log("object");
+    const dataI = {
+      customer_name: customerName,
+      items: this.selectedItems
+    }
+    console.log("data to submit",dataI);
+
       this._invoicesService.addInvoices(dataI).subscribe((res) => {
         console.log('Item added!', res);
       })
-    }
 
-    // Close the invoice form
+    // // Close the invoice form
     this.close.emit();
   }
 
@@ -111,21 +140,33 @@ export class InvoiceListComponent {
     this.close.emit();
   }
 
-  openActiveInvoice(data: any) {
+  onEdit(invoice: any) {
+    console.log(invoice);
+    // Emit the edit event to open the edit invoice form
+    this.editInvoice.emit(invoice);
+    this.item_name = invoice.item_name;
+    console.log("fffff", this.item_name);
+    this.item = { item_name: invoice.item_name, sale_price: invoice.sale_price };
+    this.quantity = invoice.quantity;
+    this.customer_name = invoice.customer_name;
+
+  }
+
+  onCheckingInvoice(data: any) {
+    console.log("=== invoice check", data.id);
+    // this.details = []
     this._invoicesService.getInvoicesDetails(data.id).subscribe({
       next: (res: any) => {
         console.log('-------->>>>, res', res);
+        this.details = []
         this.details = res.data;
       },
     });
+    this.onGetInvoices()
+
     // const dialogRef = this.dialog.open(ActiveInvoiceComponent, {
     //   width: '1500px',
     //   data: this.details
-    // });
-
-    // dialogRef.afterClosed().subscribe(res => {
-    //   res = this.details.data
-    //   console.log("details", res);
     // });
   }
 

@@ -1,11 +1,11 @@
 <div class="tab-content">
 
   <div class="row">
-    <h1>Create Invoice</h1>
+    <h1>{{details ? 'Edit Invoice' : 'Create Invoice'}}</h1>
   
     <form [formGroup]="invoiceForm" (ngSubmit)="onSubmit()">
 
-      <label>Sale Price: {{item.sale_price}}</label>
+      <label>Item:  {{item.item_name}}</label>
       <br>
       <label>Quantity:</label>
       <input type="number" [(ngModel)]="quantity" name="quantity" required formControlName="quantity">
@@ -19,11 +19,12 @@
         <input type="text" formControlName="customer_name" [(ngModel)]="customer_name">
       <br>
      
-      <button type="submit">Create Invoice</button>
+      <button type="submit">{{details ? 'Update Invoice' : 'Create Invoice'}}</button>
       <button type="button" (click)="onClose()">Cancel</button>
       
     </form>
   </div>
+  
   
 
   <h2>List invoices</h2>
@@ -48,7 +49,7 @@
             <button
               mat-raized-button
               color="primary"
-              (click)="openActiveInvoice(invoice.id)"
+              (click)="onCheckingInvoice(invoice)"
             >
               check
             </button>
@@ -81,14 +82,14 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of details">
-          <td><input type="text" value="{{ item.id }}" /></td>
-          <td><input type="text" value="{{ item.number }}" /></td>
-          <td><input type="text" value="{{ item.item_name }}" /></td>
-          <td><input type="text" value="{{ item.quantity }}" /></td>
-          <td>{{ item.unit_price * 1 }} * {{ item.quantity * 1 }}</td>
-          <td>{{ item.total_price }}</td>
-          <td><button type="button" (click)="onItemchanged()">edit</button></td>
+        <tr *ngFor="let invoice of details">
+          <td>{{ invoice.id }}</td>
+          <td>{{ invoice.number }}</td>
+          <td>{{ invoice.item_name }}</td>
+          <td>{{ invoice.quantity }}</td>
+          <td>{{ invoice.unit_price * 1 }} </td>
+          <td>{{ invoice.total_price }}</td>
+          <td><button type="button" (click)="onEdit(invoice)">edit</button></td>
         </tr>
       </tbody>
     </table>

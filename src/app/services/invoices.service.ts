@@ -43,7 +43,7 @@ export class InvoicesService {
   }
 
   getInvoicesDetails(id:number) {
-    return this._http.get(`${this.baseUrl}invoices/${id =7}`);
+    return this._http.get(`${this.baseUrl}invoices/${id}`);
   }
 
   eupdateInvoice(id: number, invoice: any) {
