@@ -28,6 +28,8 @@ export class ActiveInvoiceComponent {
   constructor(
     private _fb: FormBuilder,
     private _invoicesService: InvoicesService,
+    public dialogRef: MatDialogRef<ActiveInvoiceComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
     
   ) {
     this.invoiceForm = this._fb.group({
@@ -51,36 +53,24 @@ export class ActiveInvoiceComponent {
   }
 
   onItemSelect() {
-    const item = this.invoiceForm.value.item_name;
-    // const d = this.items.find((item_id)=> item_name === item)
-    const quantity = this.invoiceForm.value.quantity;
-    const selectedItem = {
-      item_id: item,
-      quantity: quantity
-    };
-    console.log("===<>", selectedItem);
-    this.selectedItems.push(selectedItem);
+    // const item = this.invoiceForm.value.item_name;
+    // // const d = this.items.find((item_id)=> item_name === item)
+    // const quantity = this.invoiceForm.value.quantity;
+    // const selectedItem = {
+    //   item_id: item,
+    //   quantity: quantity
+    // };
+    // console.log("===<>", selectedItem);
+    // this.selectedItems.push(selectedItem);
   }
 
-  onSubmitInvoices() {
-    if (this.invoiceForm.valid) {
-      console.log('==>', this.invoiceForm.value);
-      const customerName = this.invoiceForm.value.customer_name;
-
-      const dataI = {
-        customer_name: customerName,
-        items: this.selectedItems
-      }
-      console.log("data to submit",dataI);
-      this._invoicesService.addInvoices(dataI).subscribe((res) => {
-        console.log('Item added!', res);
-      })
-    }
+  onSplitInvoices() {
+    console.log("heeeeeeeeeey")
   }
 
-  // onClose() {
-  //   this._dialogRef.close()
-  // }
+  onClose() {
+    this.dialogRef.close()
+  }
 
   onUpdateData(data: any): void {
     const id = data.id

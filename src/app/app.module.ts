@@ -21,7 +21,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatCardModule} from '@angular/material/card';
-
+import { MatDialog } from '@angular/material/dialog';
 
 // import { ToastrModule } from 'ngx-toastr';
 // import { ReactiveFormsModule } from '@angular/forms';
@@ -51,7 +51,8 @@ import {MatCardModule} from '@angular/material/card';
     MatTableModule,
     MatToolbarModule,
     MatGridListModule,
-    MatCardModule
+    MatCardModule,
+    // MatDialog
     
     
     

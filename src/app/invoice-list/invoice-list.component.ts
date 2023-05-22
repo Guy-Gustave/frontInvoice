@@ -1,11 +1,13 @@
 import { Component, EventEmitter, Input, Output,Inject } from '@angular/core';
 
+
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import { InvoicesService } from '../services/invoices.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Item } from '../shared/item';
+import { ActiveInvoiceComponent } from '../active-invoice/active-invoice.component';
 
 @Component({
   selector: 'app-invoice-list',
@@ -39,7 +41,7 @@ export class InvoiceListComponent {
     public _fb: FormBuilder,
     // private dialog: MatDialog,
 
-    private _invoicesService: InvoicesService
+    private _invoicesService: InvoicesService, public dialog: MatDialog
   ) { 
     this.invoiceForm = this._fb.group({
       quantity: "",
@@ -192,5 +194,16 @@ export class InvoiceListComponent {
       console.log('Item added!', res);
     });
     this.onGetInvoices();
+  }
+
+  openDialog(invoice: any) {
+    const dialogRef = this.dialog.open(ActiveInvoiceComponent, {
+      width: '1000px',
+      data: invoice
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 }

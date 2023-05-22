@@ -1,7 +1,6 @@
-
+<!-- 
 <form >
   <div mat-dialog-content class="content">
-    <!-- <div class="row"> -->
     <mat-form-field appearance="outline">
       <mat-label>Customer </mat-label>
       <input
@@ -62,7 +61,57 @@
   <div mat-dialog-actions>
     <button mat-raised-button color="primary" type="submit">Save</button>
   </div>
-</form>
+</form> -->
+
+<mat-form-field appearance="outline" class="inputn">
+  <mat-label>tape the customers who divide the invoice</mat-label>
+  <input
+    matInput
+    type="number"
+    placeholder="ex: 3"
+    formControlName="numberInput"
+  />
+</mat-form-field>
+
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" type="button">Save</button>
+</div>
+
+
+<h1 mat-dialog-title>Invoice Details</h1>
+<div mat-dialog-content>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>N°</th>
+        <th>Invoice</th>
+        <th>Item name</th>
+        <th>Quantity</th>
+        <th>
+          <tr ng></tr>
+        </th>
+        <th>Unit Price</th>
+        <th>Total Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{ data.id }}</td>
+        <td>{{ data.number }}</td>
+        <td>{{ data.item_name }}</td>
+        <td>{{ data.quantity }}</td>
+        <td>{{ data.sale_price }}</td>
+        <td>{{ data.total_amount }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onSplitInvoices()">split</button>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onClose()">Close</button>
+</div>
 
 
 <!-- (click)="onItemSelect()" -->
