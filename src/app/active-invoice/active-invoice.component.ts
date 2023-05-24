@@ -13,10 +13,13 @@ import { DialogRef } from '@angular/cdk/dialog';
 })
 export class ActiveInvoiceComponent {
   invoiceForm: FormGroup
+  numberOfClients: number = 1;
+  clients: any[] = [];
+  remainingQuantity: number = 0;
 
-  items: any
-  invoices: any;
-  details: any
+  // items: any
+  // invoices: any;
+  // details: any
 
   selectedItems: any[] = [];
 
@@ -52,20 +55,32 @@ export class ActiveInvoiceComponent {
     // this.invoiceDetails = this.data
   }
 
-  onItemSelect() {
-    // const item = this.invoiceForm.value.item_name;
-    // // const d = this.items.find((item_id)=> item_name === item)
-    // const quantity = this.invoiceForm.value.quantity;
-    // const selectedItem = {
-    //   item_id: item,
-    //   quantity: quantity
-    // };
-    // console.log("===<>", selectedItem);
-    // this.selectedItems.push(selectedItem);
-  }
-
   onSplitInvoices() {
     console.log("heeeeeeeeeey")
+    console.log(this.numberOfClients);
+    this.clients = [];
+    this.remainingQuantity = 0;
+
+    const itemsPerClient = Math.floor(this.data.quantity / this.numberOfClients);
+    const remainder = this.data.quantity % this.numberOfClients;
+
+    for (let i = 0; i < this.numberOfClients; i++) {
+      const quantity = i < remainder ? itemsPerClient + 1 : itemsPerClient;
+      const totalAmount = quantity * this.data.unit_price;
+      this.clients.push({
+        clientNumber: i + 1,
+        quantity: quantity,
+        unitPrice: this.data.unit_price,
+        totalAmount: totalAmount
+      });
+    }
+
+    this.remainingQuantity = this.data.quantity - this.clients.reduce((total, client) => total + client.quantity, 0);
+  
+  }
+
+  onSaveInvoices() {
+    // TODO: Save the split invoices to the API
   }
 
   onClose() {

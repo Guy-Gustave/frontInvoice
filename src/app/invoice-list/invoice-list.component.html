@@ -1,30 +1,65 @@
 <div class="tab-content">
-
   <div class="row">
-    <h1>{{details ? 'Edit Invoice' : 'Create Invoice'}}</h1>
-  
+    <h1>{{ details ? "Edit Invoice" : "Create Invoice" }}</h1>
+
+
+
     <form [formGroup]="invoiceForm" (ngSubmit)="onSubmit()">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>number</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <!-- class="btn btn-outline-primary me-2" -->
+        <tbody>
+          <tr >
+            <td>
+              <button
+                type="button"
+                (click)="quantity = quantity - 1"
+                [disabled]="quantity <= 1"
+              >
+                -
+              </button>
+              <input
+                type="number"
+                [(ngModel)]="quantity"
+                name="quantity"
+                required
+                formControlName="quantity"
+              />
+              <button type="button" (click)="quantity = quantity + 1">+</button>
+            </td>
 
-      <label>Item:  {{item.item_name}}</label>
-      <br>
-      <label>Quantity:</label>
-      <input type="number" [(ngModel)]="quantity" name="quantity" required formControlName="quantity">
-      <br>
-      <label>Total Amount: {{quantity * item.sale_price}}</label>
-      <br>
+            <td>
+              <label> {{ item.item_name }}</label>
+            </td>
+            <td>{{ item.sale_price }}</td>
+            <td>{{ quantity * item.sale_price }}</td>
+            <td><button type="button" (click)="onItemSelect()">Add to Cart</button></td>
+          </tr>
+        </tbody>
+      </table>
 
-      <button type="button" (click)="onItemSelect()">Add to Cart</button>
-      <br>
-      <label>Customer Name</label>
-        <input type="text" formControlName="customer_name" [(ngModel)]="customer_name">
-      <br>
-      <button type="submit">{{details ? 'Update Invoice' : 'Create Invoice'}}</button>
-      <button type="button" (click)="onClose()">Cancel</button>
+      <input
+                type="text"
+                formControlName="customer_name"
+                [(ngModel)]="customer_name"
+              />
       
+      <button type="submit">
+        {{ details ? "Update Invoice" : "Create Invoice" }}
+      </button>
+      <button type="button" (click)="onClose()">Cancel</button>
+
     </form>
   </div>
-  
-  
 
   <h2>List invoices</h2>
   <form action="">
@@ -57,8 +92,6 @@
               color="red"
               (click)="ondeleteInvoices(invoice)"
             >
-
-          
               Delete
             </button>
           </td>
@@ -67,10 +100,8 @@
     </table>
   </form>
 
-
-
   <h1>invoice details</h1>
-  <form >
+  <form>
     <table class="table table-hover">
       <thead>
         <tr>
@@ -88,9 +119,17 @@
           <td>{{ invoice.number }}</td>
           <td>{{ invoice.item_name }}</td>
           <td>{{ invoice.quantity }}</td>
-          <td>{{ invoice.unit_price * 1 }} </td>
+          <td>{{ invoice.unit_price }}</td>
           <td>{{ invoice.total_price }}</td>
-          <td><button mat-raized-button color="primary" (click)="openDialog(invoice)">View Details</button> </td>
+          <td>
+            <button
+              mat-raized-button
+              color="primary"
+              (click)="openDialog(invoice)"
+            >
+              View Details
+            </button>
+          </td>
           <td><button type="button" (click)="onEdit(invoice)">edit</button></td>
         </tr>
       </tbody>

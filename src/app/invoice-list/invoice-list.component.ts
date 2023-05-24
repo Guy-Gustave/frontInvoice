@@ -20,7 +20,7 @@ export class InvoiceListComponent {
   @Output() close = new EventEmitter<void>();
   @Output() editInvoice = new EventEmitter<any>();
   customer_name!: string;
-  quantity!: number;
+  quantity: number = 1;
   // details: any;
   el = { item_name: 'Item 1', sale_price: 10 };
   editMode = false;
@@ -44,7 +44,7 @@ export class InvoiceListComponent {
     private _invoicesService: InvoicesService, public dialog: MatDialog
   ) { 
     this.invoiceForm = this._fb.group({
-      quantity: "",
+      quantity: 1,
       customer_name: "",
         item_name: "",
     });
@@ -205,5 +205,15 @@ export class InvoiceListComponent {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
+  }
+
+  increment() {
+    this.quantity++;
+  }
+  
+  decrement() {
+    if (this.quantity > 1) {
+      this.quantity--;
+    }
   }
 }

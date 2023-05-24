@@ -63,19 +63,9 @@
   </div>
 </form> -->
 
-<mat-form-field appearance="outline" class="inputn">
-  <mat-label>tape the customers who divide the invoice</mat-label>
-  <input
-    matInput
-    type="number"
-    placeholder="ex: 3"
-    formControlName="numberInput"
-  />
+<<mat-form-field>
+  <input matInput type="number" placeholder="Number of Clients" [(ngModel)]="numberOfClients">
 </mat-form-field>
-
-<div mat-dialog-actions>
-  <button mat-raised-button color="primary" type="button">Save</button>
-</div>
 
 
 <h1 mat-dialog-title>Invoice Details</h1>
@@ -87,11 +77,13 @@
         <th>Invoice</th>
         <th>Item name</th>
         <th>Quantity</th>
-        <th>
-          <tr ng></tr>
-        </th>
         <th>Unit Price</th>
         <th>Total Amount</th>
+        <ng-container *ngFor="let client of clients">
+          <th>Client {{ client.clientNumber }}</th>
+        </ng-container>
+          <th>Reste Non Attribuer</th>
+        
       </tr>
     </thead>
     <tbody>
@@ -100,19 +92,20 @@
         <td>{{ data.number }}</td>
         <td>{{ data.item_name }}</td>
         <td>{{ data.quantity }}</td>
-        <td>{{ data.sale_price }}</td>
-        <td>{{ data.total_amount }}</td>
+        <td>{{ data.unit_price }}</td>
+        <td>{{ data.total_price }}</td>
+        <ng-container *ngFor="let client of clients">
+          <td>{{ client.quantity }}
+            <!-- <input type="text" setValue({{ client.quantity }})> -->
+          </td>
+        </ng-container>
+        <td>{{ remainingQuantity }}</td>
       </tr>
     </tbody>
   </table>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onSplitInvoices()">split</button>
-</div>
-<div mat-dialog-actions>
+  <button mat-button (click)="onSaveInvoices()">Save</button>
   <button mat-button (click)="onClose()">Close</button>
 </div>
-
-
-<!-- (click)="onItemSelect()" -->
-<!-- [formGroup]="invoiceForm" (ngSubmit)="onSubmitInvoices()" -->
