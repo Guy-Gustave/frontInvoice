@@ -1,72 +1,14 @@
-<!-- 
-<form >
-  <div mat-dialog-content class="content">
-    <mat-form-field appearance="outline">
-      <mat-label>Customer </mat-label>
-      <input
-        matInput
-        type="text"
-        placeholder="name"
-        formControlName="customer_name"
-      />
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>Select product</mat-label>
-      <mat-select formControlName="item_name">
-        <mat-option *ngFor="let item of items" [value]="item.id">{{
-          item.item_name
-        }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>quantity</mat-label>
-      <input
-        matInput
-        type="number"
-        placeholder="ex: 3"
-        formControlName="quantity"
-      />
-    </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>unit price </mat-label>
-      <input
-        matInput
 
-        placeholder="0.00"
-        formControlName="unit_price"
-      />
-    </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>total_price </mat-label>
-      <input
-        matInput
-
-        placeholder="0.00"
-        formControlName="total_price"
-      />
-    </mat-form-field>
-
-    <button
-      mat-raised-button
-      color="secondary"
-      type="button"
-      
-    >
-      add
-    </button>
-  </div>
-
-  <div mat-dialog-actions>
-    <button mat-raised-button color="primary" type="submit">Save</button>
-  </div>
-</form> -->
-
-<<mat-form-field>
-  <input matInput type="number" placeholder="Number of Clients" [(ngModel)]="numberOfClients">
+<mat-form-field>
+  <input
+    matInput
+    type="number"
+    placeholder="Number of Clients"
+    [(ngModel)]="numberOfClients"
+  />
 </mat-form-field>
-
 
 <h1 mat-dialog-title>Invoice Details</h1>
 <div mat-dialog-content>
@@ -82,8 +24,7 @@
         <ng-container *ngFor="let client of clients">
           <th>Client {{ client.clientNumber }}</th>
         </ng-container>
-          <th>Reste Non Attribuer</th>
-        
+        <th>Reste Non Attribuer</th>
       </tr>
     </thead>
     <tbody>
@@ -95,13 +36,24 @@
         <td>{{ data.unit_price }}</td>
         <td>{{ data.total_price }}</td>
         <ng-container *ngFor="let client of clients">
-          <td>{{ client.quantity }}
-            <!-- <input type="text" setValue({{ client.quantity }})> -->
+          <td>
+            <!-- {{ client.quantity }} -->
+
+            <input
+              matInput
+              
+              type="number"
+              placeholder="0"
+              [(ngModel)]="client.attributted"
+              (ngModelChange)="calculateRemainingQuantity()"
+              [value]="''"
+            />
           </td>
         </ng-container>
         <td>{{ remainingQuantity }}</td>
       </tr>
     </tbody>
+     
   </table>
 </div>
 <div mat-dialog-actions>
@@ -109,3 +61,6 @@
   <button mat-button (click)="onSaveInvoices()">Save</button>
   <button mat-button (click)="onClose()">Close</button>
 </div>
+
+
+ 

@@ -198,7 +198,7 @@ export class InvoiceListComponent {
 
   openDialog(invoice: any) {
     const dialogRef = this.dialog.open(ActiveInvoiceComponent, {
-      width: '1000px',
+      width: '1200px',
       data: invoice
     });
 

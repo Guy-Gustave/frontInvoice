@@ -5,6 +5,7 @@ import { InvoiceListComponent } from '../invoice-list/invoice-list.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatTableDataSource, _MatTableDataSource } from '@angular/material/table';
 import { DialogRef } from '@angular/cdk/dialog';
+import { setTimeout } from 'timers';
 
 @Component({
   selector: 'app-active-invoice',
@@ -16,6 +17,7 @@ export class ActiveInvoiceComponent {
   numberOfClients: number = 1;
   clients: any[] = [];
   remainingQuantity: number = 0;
+  attributted: number = this.data.quantity;
 
   // items: any
   // invoices: any;
@@ -55,6 +57,15 @@ export class ActiveInvoiceComponent {
     // this.invoiceDetails = this.data
   }
 
+  calculateRemainingQuantity() {
+    console.log('Calculating remaining quantity...');
+    this.remainingQuantity = this.data.quantity;
+    for (let i = 0; i < this.clients.length; i++) {
+      this.remainingQuantity -= this.clients[i].attributted;
+    }
+    console.log('Remaining quantity:', this.remainingQuantity);
+  }
+
   onSplitInvoices() {
     console.log("heeeeeeeeeey")
     console.log(this.numberOfClients);
@@ -80,7 +91,27 @@ export class ActiveInvoiceComponent {
   }
 
   onSaveInvoices() {
-    // TODO: Save the split invoices to the API
+    // Update the original invoice with the details for the first client
+    const firstClient = this.clients[0];
+    const originalInvoice = {
+      ...this.data,
+      quantity: firstClient.quantity,
+      total_price: firstClient.totalAmount
+    };
+    // this._invoicesService.eupdateInvoice('/api/invoices/' + originalInvoice.id, originalInvoice).subscribe();
+
+    // Create a new invoice for each additional client
+    for (let i = 1; i < this.clients.length; i++) {
+      const client = this.clients[i];
+      const newInvoice = {
+        number: this.data.number + '-' + client.clientNumber,
+        item_name: this.data.item_name,
+        quantity: client.quantity,
+        unit_price: client.unitPrice,
+        total_price: client.totalAmount
+      };
+      // this.http.post('/api/invoices', newInvoice).subscribe();
+    }
   }
 
   onClose() {
