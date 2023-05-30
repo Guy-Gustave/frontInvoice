@@ -7,7 +7,7 @@
       <app-items [items]="items" (purchaseItem)="onPurchaseItem($event)"></app-items>
     </div>
     <div class="invoice">
-      <app-invoice-list *ngIf="showInvoice" [item]="selectedItem" (close)="onCloseInvoice()"></app-invoice-list>
+      <app-invoice-list *ngIf="showInvoice" [invo]="invoic" (close)="onCloseInvoice()"  ></app-invoice-list>
     </div>
 
     <!-- <app-active-invoice *ngIf="showEditInvoice" (close)="onCloseEditInvoice()" (save)="onSaveInvoice($event)"></app-active-invoice> -->

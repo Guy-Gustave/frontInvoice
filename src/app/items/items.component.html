@@ -18,21 +18,25 @@
         </form>
     </div>
 </div>
-
+<!-- <button mat-raised-button color="primary" (click)="onPurchase(item)">Purchase</button> -->
 
 <div class="row">
     <h1>list of items</h1>
-
-      <mat-card class="example-card" *ngFor="let item of items">
-        <mat-card-header>
+      <mat-card class="example-card" *ngFor="let item of items" (click)="onPurchase(item)">
+        <mat-card-header class="heade">
           <mat-card-title>{{item.item_name}}</mat-card-title>
         </mat-card-header>
+        <div class="id">
+          <p>{{item.id}}</p>
+        </div>
         <mat-card-content class="cont">
+          
           <p>{{item.sale_price}}</p>
-          <button mat-raised-button color="primary" (click)="onPurchase(item)">Purchase</button>
+          
         </mat-card-content>
 
       </mat-card>
+ 
 </div>
 
 

@@ -5,7 +5,7 @@ import { InvoiceListComponent } from '../invoice-list/invoice-list.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatTableDataSource, _MatTableDataSource } from '@angular/material/table';
 import { DialogRef } from '@angular/cdk/dialog';
-import { setTimeout } from 'timers';
+// import { setTimeout } from 'timers';
 
 @Component({
   selector: 'app-active-invoice',
@@ -18,12 +18,14 @@ export class ActiveInvoiceComponent {
   clients: any[] = [];
   remainingQuantity: number = 0;
   attributted: number = this.data.quantity;
+  customer_name: string = ""
 
-  // items: any
+  // itms: any
   // invoices: any;
   // details: any
 
   selectedItems: any[] = [];
+  selectedInvoices: any[] = [];
 
   displayedColumns: string [] = ['ID', 'item_name', 'quantity', 'unit_price', 'total_price'];
   dataSource!: MatTableDataSource<any>
@@ -90,28 +92,43 @@ export class ActiveInvoiceComponent {
   
   }
 
-  onSaveInvoices() {
+  onSaveInvoices(id:number, clients: any) {
     // Update the original invoice with the details for the first client
-    const firstClient = this.clients[0];
-    const originalInvoice = {
-      ...this.data,
-      quantity: firstClient.quantity,
-      total_price: firstClient.totalAmount
-    };
-    // this._invoicesService.eupdateInvoice('/api/invoices/' + originalInvoice.id, originalInvoice).subscribe();
+    // const firstClient = this.clients[0];
+    // const originalInvoice = {
+    //   ...this.data,
+    //   // quantity: firstClient.quantity,
+    //   quantity: this.remainingQuantity,
+    //   total_price: this.data.unit_price * this.remainingQuantity
+    // };
 
     // Create a new invoice for each additional client
-    for (let i = 1; i < this.clients.length; i++) {
+
+    for (let i = 0; i < this.clients.length; i++) {
       const client = this.clients[i];
+      // const item = this.data.item_id
+      const itm= {
+        item_id: this.data.item_id,
+        quantity: client.attributted,
+      }
+      this.selectedItems.push(itm);
+
+      // const {item_id, quantity} = this.selectedItems
       const newInvoice = {
-        number: this.data.number + '-' + client.clientNumber,
-        item_name: this.data.item_name,
-        quantity: client.quantity,
-        unit_price: client.unitPrice,
-        total_price: client.totalAmount
+        customer_name: 'Client'+ client.clientNumber,
+        items: this.selectedItems
+        
+        
       };
-      // this.http.post('/api/invoices', newInvoice).subscribe();
+      // const inv = {items: newInvoice}
+      this.selectedInvoices.push(newInvoice);
+      console.log("invoiceeeee split price", this.selectedInvoices);
+      
     }
+    const arrayClients = {clients: this.selectedInvoices}
+    console.log("clients with their consumption", arrayClients);
+    this._invoicesService.splitInvoice(id, arrayClients).subscribe();
+
   }
 
   onClose() {

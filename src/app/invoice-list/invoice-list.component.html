@@ -2,62 +2,85 @@
   <div class="row">
     <h1>{{ details ? "Edit Invoice" : "Create Invoice" }}</h1>
 
-
-
     <form [formGroup]="invoiceForm" (ngSubmit)="onSubmit()">
       <table class="table table-hover">
         <thead>
           <tr>
-            <th>ID</th>
-            <th>number</th>
+            <th>Quantity</th>
+            <th>Item</th>
+            <th>Unit Price</th>
             <th></th>
             <th></th>
-            <th></th>
-            <th></th>
+            <!-- <th></th> -->
           </tr>
         </thead>
         <!-- class="btn btn-outline-primary me-2" -->
         <tbody>
-          <tr >
+          <tr *ngFor="let el of invo.items; let i = index">
             <td>
               <button
                 type="button"
-                (click)="quantity = quantity - 1"
+                (click)="el.quantity = el.quantity - 1"
                 [disabled]="quantity <= 1"
               >
                 -
               </button>
               <input
                 type="number"
-                [(ngModel)]="quantity"
+                [(ngModel)]="el.quantity"
                 name="quantity"
                 required
                 formControlName="quantity"
+                (change)="onItemQuantityChanged(el.quantity)"
+               
+                
               />
-              <button type="button" (click)="quantity = quantity + 1">+</button>
+              <button type="button" (click)="el.quantity = el.quantity + 1">+</button>
             </td>
 
             <td>
-              <label> {{ item.item_name }}</label>
+              <label> {{ el.item_name }}</label>
             </td>
-            <td>{{ item.sale_price }}</td>
-            <td>{{ quantity * item.sale_price }}</td>
-            <td><button type="button" (click)="onItemSelect()">Add to Cart</button></td>
+            <td>{{ el.sale_price }}</td>
+            <td>{{ el.quantity * el.sale_price }}</td>
+          </tr>
+          <tr>
+            <th colspan="3">Sub total :</th>
+            <td></td>
+            <td>{{ invo.total_amount }}</td>
+          </tr>
+
+          <tr>
+            <th colspan="3">the taxes:</th>
+            <td></td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <th colspan="3">the tatal amount is:</th>
+            <td></td>
+            <td>{{ quantity * el.sale_price }}</td>
           </tr>
         </tbody>
+
+
+        <tfoot>
+          <tr>
+            <td colspan="3">Total:</td>
+            <td>{{invo.total}}</td>
+          </tr>
+        </tfoot>
       </table>
 
       <input
-                type="text"
-                formControlName="customer_name"
-                [(ngModel)]="customer_name"
-              />
-      
+        type="text"
+        formControlName="customer_name"
+        [(ngModel)]="customer_name"
+      />
+
       <button type="submit">
         {{ details ? "Update Invoice" : "Create Invoice" }}
       </button>
       <button type="button" (click)="onClose()">Cancel</button>
-
     </form>
   </div>
 
@@ -72,7 +95,7 @@
           <th>total amount</th>
         </tr>
       </thead>
-      <!-- class="btn btn-outline-primary me-2" -->
+  
       <tbody>
         <tr *ngFor="let invoice of invoices">
           <td>{{ invoice.id }}</td>
@@ -101,7 +124,7 @@
   </form>
 
   <h1>invoice details</h1>
-  <form>
+  <!-- <form>
     <table class="table table-hover">
       <thead>
         <tr>
@@ -136,5 +159,5 @@
     </table>
 
     <button type="button" class="btn btn-secondary">update</button>
-  </form>
+  </form> -->
 </div>

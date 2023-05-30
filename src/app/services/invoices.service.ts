@@ -62,6 +62,14 @@ export class InvoicesService {
     return this._http.get(`${this.baseUrl}invoices_items`);
   }
 
+//  SPLIT INVOICE
+
+
+  splitInvoice(id: number, clients: any) {
+    return this._http.post(`${this.baseUrl}invoices/split/${id}`, clients);
+  }
+
+
   errorHandl(error:any) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {

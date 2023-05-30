@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { InvoicesService } from './services/invoices.service';
 import { Invoice } from './shared/invoice';
+import { EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +12,14 @@ export class AppComponent {
   title = 'invoices';
 
   items: any[] = [];
+
+  invoic: any = {
+    items: [],
+    totalAmount: 0,
+  };
+
+  @Output() itemQuantityChanged = new EventEmitter<any>();
+
   invoices: any[] = [];
 
   constructor(private _invoicesService: InvoicesService) {}
@@ -36,10 +45,40 @@ export class AppComponent {
   showEditInvoice = false;
   selectedInvoice: any;
 
-  onPurchaseItem(item: any) {
-    this.selectedItem = item;
-    this.showInvoice = true;
+  // @Output() itemQuantityChanged = new EventEmitter<any>();
+
+  onItemQuantityChanged(item: any, quantity: number) {
+    item.quantity = quantity;
+    item.total_amount = quantity * item.sale_price;
+    this.invoic.totalAmount = this.invoic.items.reduce((acc: any, item: { total_amount: any; }) => acc + item.total_amount, 0);
+    this.itemQuantityChanged.emit(item);
   }
+
+  onPurchaseItem(item: any) {
+    const itemIndex = this.invoic.items.findIndex((i: { item_id: any; }) => i.item_id === item.item_id);
+
+    if (itemIndex!== -1) {
+      this.invoic.items[itemIndex].quantity++;
+    } else {
+      // const quant = 1
+      const itemData = {
+        item_id: item.id,
+        item_name: item.item_name,
+        sale_price: item.sale_price,
+        quantity: 1,
+        unit_price: item.sale_price,
+        total_amount: item.quantity* item.sale_price
+      };
+  
+      this.invoic.items.push(itemData);
+      this.invoic.total += item.total_amount;
+
+      console.log('invvvvvvvv', this.invoic);
+      this.showInvoice = true;
+    }
+  }
+
+  
 
   onCloseInvoice() {
     this.showInvoice = false;

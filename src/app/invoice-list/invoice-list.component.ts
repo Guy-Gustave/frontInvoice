@@ -17,8 +17,10 @@ import { ActiveInvoiceComponent } from '../active-invoice/active-invoice.compone
 export class InvoiceListComponent {
   [x: string]: any;
   @Input() item: any;
+  @Input() invo: any;
   @Output() close = new EventEmitter<void>();
   @Output() editInvoice = new EventEmitter<any>();
+  @Output() itemQuantityChanged = new EventEmitter<any>();
   customer_name!: string;
   quantity: number = 1;
   // details: any;
@@ -32,6 +34,11 @@ export class InvoiceListComponent {
   details: any;
 
   selectedItems: any[] = [];
+  // invoice: any = {
+  //   items: [],
+  //   total: 0
+  // };
+
 
   updatedItems: any[] = [];
   item_name: any;
@@ -61,18 +68,12 @@ export class InvoiceListComponent {
       this.customer_name = this.details.customer_name;
     }
 
-    // this._invoicesService.getItemsList().subscribe({
-    //   next: (res: any) => {
-    //     console.log(res.data);
-    //     this.items = res;
-    //   },
-    // });
   }
 
   onGetInvoices() {
     this._invoicesService.getInvoicesList().subscribe({
       next: (res: any) => {
-        console.log(res);
+        console.log("inv from api", res);
         this.invoices = res.data;
       },
     });
@@ -105,28 +106,15 @@ export class InvoiceListComponent {
   
   }
 
-  onItemchanged() {
-    // const item = this.updateForm.value.item_name;
-    // const d = this.items.find((item_id)=> item_name === item)
-    // const quantity = this.updateForm.value.quantity;
-    // const selectedItem = {
-    //   item_id: item,
-    //   quantity: quantity,
-    // };
-    // console.log('===<>', selectedItem);
-    // this.updatedItems.push(selectedItem);
-  }
 
   onSubmit() {
     // Submit data to backend and create invoice
-    // ...
-
     
     const customerName = this.invoiceForm.value.customer_name;
     console.log("object");
     const dataI = {
       customer_name: customerName,
-      items: this.selectedItems
+      items: this.invo.Items
     }
     console.log("data to submit",dataI);
 
@@ -206,6 +194,18 @@ export class InvoiceListComponent {
       console.log('The dialog was closed');
     });
   }
+
+//   onItemQuantityChanged(item: any, quantity: number) {
+//   item.quantity   = this.invoiceForm.value.quantity;;
+//   item.total_amount = item.quantity * item.sale_price;
+//   // this.onItemClicked(item);
+// }
+
+onItemQuantityChanged(quantity: number) {
+  this.item.quantity = quantity;
+  this.item.total_amount = quantity * this.item.sale_price;
+  this.itemQuantityChanged.emit(this.item);
+}
 
   increment() {
     this.quantity++;
